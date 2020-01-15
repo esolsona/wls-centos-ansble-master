@@ -22,12 +22,12 @@
   user: name="{{usuario_servicio}}" group="{{grupo_servicio}}" createhome=yes  shell=/bin/bash
   become: true
   
-- name: Copiar software jdk
-  copy:
-    src: jdk-8u131-linux-x64.rpm
-    dest: /tmp/
-    owner: root
-    mode: '0440'
+#- name: Copiar software jdk
+#  copy:
+#   src: jdk-8u131-linux-x64.rpm
+#    dest: /tmp/
+#    owner: root
+#    mode: '0440'
 
 - name: Instalando jdk
   command: yum localinstall -y /tmp/jdk-8u131-linux-x64.rpm
@@ -64,11 +64,11 @@
     dest: /tmp/
     owner: weblogic
   
-- name: Copiando "fmw_{{version}}"
-  copy:
-    src: "fmw_{{version}}_wls.jar"
-    dest: /tmp/
-    owner: weblogic
+#- name: Copiando "fmw_{{version}}"
+#  copy:
+#    src: "fmw_{{version}}_wls.jar"
+#    dest: /tmp/
+#    owner: weblogic
 
 - name: Copiando script binarios
   copy:
