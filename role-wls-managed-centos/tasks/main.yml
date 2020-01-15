@@ -1,0 +1,52 @@
+    - name: Copiando propiedades del Managed
+      copy:
+        src: create_managed_server.py
+        dest: /tmp/
+        owner: weblogic
+
+    - name: Copiando script instalación del Managed
+      copy:
+        src: instalar_Managed.sh
+        dest: /tmp/
+        owner: weblogic
+
+    - name: Configurando nombre de Managed
+      lineinfile: 
+        path: /tmp/myDomain.properties
+        regexp: "ms.name"
+        line: "ms.name={{ansible_hostname}}"
+
+    - name: Configurando IP de Managed
+      lineinfile: 
+        path: /tmp/myDomain.properties
+        regexp: "ms.address"
+        line: "ms.address={{ansible_hostname}}"
+
+    - name: Configurando machine de Managed
+      lineinfile: 
+        path: /tmp/myDomain.properties
+        regexp: "ms.machine"
+        line: "ms.machine={{ansible_hostname}}"
+
+    - name: Instalando Managed
+      shell: su - weblogic -c "sh /tmp/instalar_Managed.sh"
+
+    - name: Creando directorio de seguri1dad 
+      file:
+        path: "{{directorio_domi}}/domains/dominio/servers/{{ansible_hostname}}/security/"
+        state: directory
+        owner: "{{usuario_servicio}}"
+        group: "{{grupo_servicio}}"
+
+    - name: Copiando credenciales de AdminServer
+      copy:
+        src: boot.properties
+        dest: "{{directorio_domi}}/domains/dominio/servers/{{ansible_hostname}}/security/"
+        owner: weblogic
+
+    - name: Iniciando Managed
+      shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh {{ansible_hostname}} &"
+
+
+
+      

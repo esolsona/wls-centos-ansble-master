@@ -1,0 +1,115 @@
+- name: Instalando dependencias de sistema
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - wget
+    - lsof
+    - lynx
+    - mlocate
+
+- name: Creando grupo
+  group: 
+    name: "{{grupo_servicio}}"
+    state: present
+
+- name: Creando directorio instalación
+  file:
+    path: "{{directorio_inst}}"
+    state: directory
+
+- name: Creando usuario weblogic
+  user: name="{{usuario_servicio}}" group="{{grupo_servicio}}" createhome=yes  shell=/bin/bash
+  become: true
+  
+- name: Copiar software jdk
+  copy:
+    src: jdk-8u131-linux-x64.rpm
+    dest: /tmp/
+    owner: root
+    mode: '0440'
+
+- name: Instalando jdk
+  command: yum localinstall -y /tmp/jdk-8u131-linux-x64.rpm
+
+- name: Estableciendo variables de entorno en bash_profile en root
+  copy:
+    src: root/.bash_profile
+    dest: /root/
+    owner: root
+
+- name: Estableciendo variables de entorno en bash_profile en weblogic
+  copy:
+    src: weblogic/.bash_profile
+    dest: /home/weblogic/
+    owner: weblogic
+
+- name: Creando directorio de oraInventory
+  file:
+    path: "{{directorio_oraI}}"
+    state: directory
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+
+
+- name: Copiando oraInst.loc
+  copy:
+    src: oraInst.loc
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando wls.rsp
+  copy:
+    src: wls.rsp
+    dest: /tmp/
+    owner: weblogic
+  
+- name: Copiando "fmw_{{version}}"
+  copy:
+    src: "fmw_{{version}}_wls.jar"
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando script binarios
+  copy:
+    src: instalar_binarios.sh
+    dest: /tmp/
+    owner: weblogic
+
+- name: Cambiando propietario
+  file:
+    path: "{{directorio_gene}}"
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    recurse: yes
+    mode: '0755'
+
+- name: Instalando binarios Weblogic
+  shell: su - weblogic -c "sh /tmp/instalar_binarios.sh"
+
+- name: Creando directorio de dominio 
+  file:
+    path: "{{directorio_inst}}/wlserver/common/templates/domains/"
+    state: directory
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    
+- name: Creando subdirectorios dominio
+  file:
+    path: "{{directorio_domi}}"
+    state: directory
+  with_items: ["domains","applications"]
+
+- name: Cambiando propietario
+  file:
+    path: "{{directorio_gene}}"
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    recurse: yes
+    mode: '0755'
+
+- name: Copiando propiedades generales de Weblogic
+  copy:
+    src: myDomain.properties
+    dest: /tmp/
+    owner: weblogic

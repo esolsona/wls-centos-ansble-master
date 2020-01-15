@@ -1,0 +1,1 @@
+# role-wls-nodemanager-centos

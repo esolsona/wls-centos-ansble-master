@@ -1,0 +1,70 @@
+- name: Copiando script creación de NodeManager 
+  copy:
+    src: create_nodemanagr_ref.py
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando script instalación  NodeManager
+  copy:
+    src: instalar_NodeManager.sh
+    dest: /tmp/
+    owner: weblogic
+
+- name: Configurando Nombre de NodeManager
+  lineinfile: 
+    path: /tmp/myDomain.properties
+    regexp: "nm.name"
+    line: "nm.name={{ansible_hostname}}"
+
+- name: Configurando IP de NodeManager
+  lineinfile: 
+    path: /tmp/myDomain.properties
+    regexp: "nm.address"
+    line: "nm.address={{ansible_hostname}}"
+
+
+- name: Instalando NodeManager
+  shell: su - weblogic -c "sh /tmp/instalar_NodeManager.sh"
+
+#- name: Copiando nodemanager.domains
+#  copy:
+#    src: "{{directorio_domi}}/domains/dominio/nodemanager/nodemanager.domains"
+#    dest: "{{directorio_inst}}/oracle_common/common/nodemanager/"
+#    remote_src: yes
+
+- name: Copiando DemoIdentity
+  copy:
+    src: "{{directorio_gene}}/config/domains/dominio/security/DemoIdentity.jks"
+    dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
+    remote_src: yes
+
+- name: Configurando IP de NodeManager
+  lineinfile: 
+    dest: "{{directorio_domi}}/domains/dominio/nodemanager/nodemanager.properties"
+    regexp: "ListenAddress"
+    state: absent 
+
+- name: Creando directorio de seguridad
+  file:
+    path: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
+    state: directory
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    recurse: yes
+    
+- name: Cambiando propiretario
+  file:
+    path: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    recurse: yes
+    mode: '0755'
+
+- name: Copiando script instalación  NodeManager
+  copy:
+    src: /tmp/DemoIdentity.jks
+    dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
+    owner: weblogic
+               
+- name: Iniciando NodeManager
+  shell: su - weblogic -c "nohup sh {{directorio_gene}}/config/domains/dominio/bin/startNodeManager.sh &"

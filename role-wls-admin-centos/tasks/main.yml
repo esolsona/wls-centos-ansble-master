@@ -1,0 +1,71 @@
+- name: Copiando propiedades del dominio 
+  copy:
+    src: create_domain.py
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando script instalación Admin
+  copy:
+    src: instalar_Admin.sh
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando script creación de cluster 
+  copy:
+    src: create_cluster.py
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando script instalación Cluster
+  copy:
+    src: instalar_cluster.sh
+    dest: /tmp/
+    owner: weblogic
+
+- name: Copiando wls.jar al contexto de dominio
+  copy:
+    src: "{{directorio_inst}}/wlserver/common/templates/wls/wls.jar"
+    dest: "{{directorio_inst}}/wlserver/common/templates/domains/"
+    remote_src: yes
+
+- name: Instalando Admin Weblogic
+  shell: su - weblogic -c "sh /tmp/instalar_Admin.sh"
+  run_once: true
+
+- name: Cambiando propiretario
+  file:
+    path: "{{directorio_gene}}"
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    recurse: yes
+    mode: '0755'
+
+- name: Creando directorio de seguridad 
+  file:
+    path: "{{directorio_domi}}/domains/dominio/servers/AdminServer/security"
+    state: directory
+    owner: "{{usuario_servicio}}"
+    group: "{{grupo_servicio}}"
+    recurse: yes
+
+- name: Copiando credenciales de AdminServer
+  copy:
+    src: boot.properties
+    dest: "{{directorio_domi}}/domains/dominio/servers/AdminServer/security/"
+    owner: weblogic
+
+- name: Iniciando AdminServer
+  shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startWebLogic.sh &"
+  run_once: true
+  
+- pause: seconds=20
+  
+- name: Instalando Cluster.
+  shell: su - weblogic -c "sh /tmp/instalar_cluster.sh"
+  run_once: true
+
+- name: Descargar certificado de AdminServer
+  fetch:
+    src: /opt/oracle/weblogic/config/domains/dominio/security/DemoIdentity.jks
+    dest: /tmp/
+  run_once: true
