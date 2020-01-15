@@ -44,6 +44,12 @@
 #    dest: /home/weblogic/
 #    owner: weblogic
 
+- name: Copiando bash_profile
+  copy:
+    src: /root/.bash_profile
+    dest: /home/weblogic/
+    remote_src: yes
+    
 - name: Creando directorio de oraInventory
   file:
     path: "{{directorio_oraI}}"
