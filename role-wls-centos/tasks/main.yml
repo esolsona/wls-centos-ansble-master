@@ -32,17 +32,17 @@
 - name: Instalando jdk
   command: yum localinstall -y /tmp/jdk-8u131-linux-x64.rpm
 
-- name: Estableciendo variables de entorno en bash_profile en root
-  copy:
-    src: root/.bash_profile
-    dest: /root/
-    owner: root
+#- name: Estableciendo variables de entorno en bash_profile en root
+#  copy:
+#    src: root/.bash_profile
+#    dest: /root/
+#    owner: root
 
-- name: Estableciendo variables de entorno en bash_profile en weblogic
-  copy:
-    src: weblogic/.bash_profile
-    dest: /home/weblogic/
-    owner: weblogic
+#- name: Estableciendo variables de entorno en bash_profile en weblogic
+#  copy:
+#    src: weblogic/.bash_profile
+#    dest: /home/weblogic/
+#    owner: weblogic
 
 - name: Creando directorio de oraInventory
   file:
