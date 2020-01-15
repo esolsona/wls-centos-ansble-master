@@ -42,7 +42,7 @@
  
 - name: Copiando DemoIdentity
   copy:
-    src: "{{directorio_gene}}/config/domains/domains/dominio/security/DemoIdentity.jks"
+    src: "{{directorio_gene}}/config/domains/dominio/security/DemoIdentity.jks"
     dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
     remote_src: yes
 
