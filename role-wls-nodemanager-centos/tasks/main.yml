@@ -68,11 +68,11 @@
     recurse: yes
     mode: '0755'
 
-- name: Copiando script instalación  NodeManager
-  copy:
-    src: /tmp/DemoIdentity.jks
-    dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
-    owner: weblogic
+#- name: Copiando script instalación  NodeManager
+#  copy:
+#    src: /tmp/DemoIdentity.jks
+#    dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
+#    owner: weblogic
                
 - name: Iniciando NodeManager
   shell: su - weblogic -c "nohup sh {{directorio_gene}}/config/domains/dominio/bin/startNodeManager.sh &"
