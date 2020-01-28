@@ -44,6 +44,12 @@
         dest: "{{directorio_domi}}/domains/dominio/servers/{{ansible_hostname}}/security/"
         owner: weblogic
 
+    - name: Copiando script instalación del Managed
+      copy:
+        src: startManagedWebLogic.sh
+        dest: /opt/oracle/weblogic/config/domains/dominio/bin/
+        owner: weblogic
+
     - name: Iniciando Managed
       shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh {{ansible_hostname}} &"
 
