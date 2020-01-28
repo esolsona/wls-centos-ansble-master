@@ -57,7 +57,7 @@
 - name: Copiando jks instalación NodeManager
   copy:
     src: DemoIdentity.jks
-    dest: /opt/oracle/weblogic/product/12.2.1/oracle_common/common/nodemanager/security/
+    dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
     owner: weblogic
 
 #- name: Fetching a file from remote server
@@ -69,13 +69,13 @@
     regexp: "ListenAddress"
     state: absent 
 
-- name: Creando directorio de seguridad
-  file:
-    path: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
-    state: directory
-    owner: "{{usuario_servicio}}"
-    group: "{{grupo_servicio}}"
-    recurse: yes
+#- name: Creando directorio de seguridad
+#  file:
+#    path: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
+#    state: directory
+#    owner: "{{usuario_servicio}}"
+#    group: "{{grupo_servicio}}"
+#    recurse: yes
     
 - name: Cambiando propiretario
   file:
@@ -84,6 +84,7 @@
     group: "{{grupo_servicio}}"
     recurse: yes
     mode: '0755'
+
 
 #- name: Copiando script instalación  NodeManager
 #  copy:
