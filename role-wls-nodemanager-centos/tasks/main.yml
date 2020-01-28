@@ -39,7 +39,6 @@
     owner: "{{usuario_servicio}}"
     group: "{{grupo_servicio}}"
     recurse: yes
- 
 
 - name: Creando directorio de demoIdentity
   file:
@@ -55,8 +54,14 @@
     dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
     remote_src: yes
 
-- name: Fetching a file from remote server
-  shell: scp 192.168.158.129:/opt/oracle/weblogic/config/domains/dominio/security/DemoIdentity.jks /opt/oracle/weblogic/product/12.2.1/oracle_common/common/nodemanager/security/ >> somelog.txt
+- name: Copiando jks instalación NodeManager
+  copy:
+    src: DemoIdentity.jks
+    dest: /opt/oracle/weblogic/product/12.2.1/oracle_common/common/nodemanager/security/
+    owner: weblogic
+
+#- name: Fetching a file from remote server
+#  shell: scp 192.168.158.129:/opt/oracle/weblogic/config/domains/dominio/security/DemoIdentity.jks /opt/oracle/weblogic/product/12.2.1/oracle_common/common/nodemanager/security/ >> somelog.txt
 
 - name: Configurando IP de NodeManager
   lineinfile: 
