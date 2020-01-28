@@ -46,6 +46,9 @@
     dest: "{{directorio_inst}}/oracle_common/common/nodemanager/security/"
     remote_src: yes
 
+- name: Fetching a file from remote server
+  shell: scp 192.168.159.129:/opt/oracle/weblogic/config/domains/dominio/security/DemoIdentity.jks "{{directorio_inst}}/oracle_common/common/nodemanager/security/" >> somelog.txt
+
 - name: Configurando IP de NodeManager
   lineinfile: 
     dest: "{{directorio_domi}}/domains/dominio/nodemanager/nodemanager.properties"
