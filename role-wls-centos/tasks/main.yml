@@ -29,8 +29,8 @@
 #    owner: root
 #    mode: '0440'
 
-- name: Instalando jdk
-  command: yum localinstall -y /tmp/jdk-8u131-linux-x64.rpm
+#- name: Instalando jdk
+#  command: yum localinstall -y /tmp/jdk-8u131-linux-x64.rpm
 
 #- name: Estableciendo variables de entorno en bash_profile en root
 #  copy:
