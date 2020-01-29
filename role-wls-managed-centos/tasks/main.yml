@@ -10,23 +10,23 @@
         dest: /tmp/
         owner: weblogic
 
-    - name: Configurando nombre de Managed
-      lineinfile: 
-        path: /tmp/myDomain.properties
-        regexp: "ms.name"
-        line: "ms.name={{ansible_hostname}}"
+#    - name: Configurando nombre de Managed
+#      lineinfile: 
+#        path: /tmp/myDomain.properties
+#        regexp: "ms.name"
+#        line: "ms.name={{ansible_hostname}}"
 
-    - name: Configurando IP de Managed
-      lineinfile: 
-        path: /tmp/myDomain.properties
-        regexp: "ms.address"
-        line: "ms.address={{ansible_hostname}}"
+#    - name: Configurando IP de Managed
+#      lineinfile: 
+#        path: /tmp/myDomain.properties
+#        regexp: "ms.address"
+#        line: "ms.address={{ansible_hostname}}"
 
-    - name: Configurando machine de Managed
-      lineinfile: 
-        path: /tmp/myDomain.properties
-        regexp: "ms.machine"
-        line: "ms.machine={{ansible_hostname}}"
+#    - name: Configurando machine de Managed
+#      lineinfile: 
+#        path: /tmp/myDomain.properties
+#        regexp: "ms.machine"
+#        line: "ms.machine={{ansible_hostname}}"
 
     - name: Instalando Managed
       shell: su - weblogic -c "sh /tmp/instalar_Managed.sh"

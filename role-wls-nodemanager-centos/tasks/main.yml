@@ -1,6 +1,6 @@
 - name: Copiando script creación de NodeManager 
   copy:
-    src: create_nodemanagr_ref.py
+    src: create_nodemanager_ref.py
     dest: /tmp/
     owner: weblogic
 
@@ -10,17 +10,17 @@
     dest: /tmp/
     owner: weblogic
 
-- name: Configurando Nombre de NodeManager
-  lineinfile: 
-    path: /tmp/myDomain.properties
-    regexp: "nm.name"
-    line: "nm.name={{ansible_hostname}}"
+#- name: Configurando Nombre de NodeManager
+#  lineinfile: 
+#    path: /tmp/myDomain.properties
+#    regexp: "nm.name"
+#    line: "nm.name={{ansible_hostname}}"
 
-- name: Configurando IP de NodeManager
-  lineinfile: 
-    path: /tmp/myDomain.properties
-    regexp: "nm.address"
-    line: "nm.address={{ansible_hostname}}"
+#- name: Configurando IP de NodeManager
+#  lineinfile: 
+#    path: /tmp/myDomain.properties
+#    regexp: "nm.address"
+#    line: "nm.address={{ansible_hostname}}"
 
 
 - name: Instalando NodeManager
