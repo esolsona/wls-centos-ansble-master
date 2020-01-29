@@ -62,7 +62,7 @@
       shell: su - weblogic -c "sh /tmp/instalar_Managed.sh"
 
     - name: Iniciando Managed
-      shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh {{ansible_hostname}} &"
+      shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh ansiblec3 &"
 
 
 
