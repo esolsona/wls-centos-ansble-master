@@ -28,6 +28,8 @@
 #        regexp: "ms.machine"
 #        line: "ms.machine={{ansible_hostname}}"
 
+    - pause: seconds=7
+    
     - name: Instalando Managed
       shell: su - weblogic -c "sh /tmp/instalar_Managed.sh"
 
