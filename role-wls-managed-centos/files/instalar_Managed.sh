@@ -1,4 +1,8 @@
 #!/bin/bash
+HOSTNAME=$(hostname)
+if [ $HOSTNAME == ansibleC2 ]; then
+    sleep 10
+fi
 
 # Load Environment
 export CONFIG_JVM_ARGS=-Djava.security.egd=file:/dev/./urandom
