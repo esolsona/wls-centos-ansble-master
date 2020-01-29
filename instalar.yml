@@ -2,7 +2,7 @@
   hosts: all
   become: true
   roles: 
-    - role-wls-centos
-#    - role-wls-admin-centos
-#    - role-wls-nodemanager-centos
+#    - role-wls-centos
+    - role-wls-admin-centos
+    - role-wls-nodemanager-centos
 #    - role-wls-managed-centos
