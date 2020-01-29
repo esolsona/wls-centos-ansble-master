@@ -38,6 +38,13 @@
         owner: "{{usuario_servicio}}"
         group: "{{grupo_servicio}}"
 
+    - name: Creando directorio de seguridad 
+      file:
+        path: /opt/oracle/weblogic/config/domains/dominio/bin
+        state: directory
+        owner: "{{usuario_servicio}}"
+        group: "{{grupo_servicio}}"
+
     - name: Copiando credenciales de AdminServer
       copy:
         src: boot.properties
@@ -50,8 +57,8 @@
         dest: /opt/oracle/weblogic/config/domains/dominio/bin/
         owner: weblogic
 
-    - name: Iniciando Managed
-      shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh {{ansible_hostname}} &"
+    #- name: Iniciando Managed
+    #  shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh {{ansible_hostname}} &"
 
 
 
