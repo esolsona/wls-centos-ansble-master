@@ -30,8 +30,7 @@
 
     - pause: seconds=7
     
-    - name: Instalando Managed
-      shell: su - weblogic -c "sh /tmp/instalar_Managed.sh"
+    
 
     - name: Creando directorio de seguri1dad 
       file:
@@ -58,6 +57,9 @@
         src: startManagedWebLogic.sh
         dest: /opt/oracle/weblogic/config/domains/dominio/bin/
         owner: weblogic
+
+    - name: Instalando Managed
+      shell: su - weblogic -c "sh /tmp/instalar_Managed.sh"
 
     #- name: Iniciando Managed
     #  shell: su - weblogic -c "nohup sh {{directorio_domi}}/domains/dominio/bin/startManagedWebLogic.sh {{ansible_hostname}} &"
